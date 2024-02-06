@@ -36,6 +36,7 @@ let countdownInterval;
 
 function startTimer() {
   countdownInterval = setInterval(updateTimer, 1000, userSelectedDate);
+  inputData.disabled = true;
 }
 
 function updateTimer(endDate) {
@@ -55,23 +56,16 @@ function updateTimer(endDate) {
   }
 }
 
-startButton.addEventListener('click', () => {
-  if (userSelectedDate) {
-    startTimer();
-  }
-});
-
 function stopTimer() {
-  if (countdownInterval) {
-    clearInterval(countdownInterval);
+  clearInterval(countdownInterval);
 
-    daysData.textContent = '00';
-    hoursData.textContent = '00';
-    minutesData.textContent = '00';
-    secondsData.textContent = '00';
-
-    countdownInterval = null;
-  }
+  daysData.textContent = '00';
+  hoursData.textContent = '00';
+  minutesData.textContent = '00';
+  secondsData.textContent = '00';
+  countdownInterval = null;
+  inputData.disabled = false;
+  startButton.disabled = true;
 }
 
 function addLeadingZero(value) {
@@ -93,3 +87,12 @@ function convertMs(ms) {
 }
 
 flatpickr(inputData, options);
+
+startButton.addEventListener('click', () => {
+  if (userSelectedDate) {
+    startTimer();
+    inputData.disabled = true;
+  }
+});
+
+startButton.disabled = true;
